@@ -1,3 +1,3 @@
-# scribe-plugin-toolbar.js.map
+# scribe-plugin-toolbar.min.js
 
-bower install scribe-plugin-toolbar.js.map
+bower install scribe-plugin-toolbar.min.js
