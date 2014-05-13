@@ -1,3 +1,10 @@
 {
-  "name": "scribe-plugin-toolbar"
+  "name": "scribe-plugin-toolbar",
+  "dependencies": {
+    "lodash-amd": "2.4.1"
+  },
+  "devDependencies": {
+    "requirejs": "~2.1.9",
+    "scribe": "~0.1.10"
+  }
 }
