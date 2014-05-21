@@ -1,5 +1,10 @@
 {
   "name": "scribe-plugin-toolbar",
+  "version": "0.1.2",
+  "main": "src/scribe-plugin-toolbar.js",
+  "dependencies": {
+    "lodash-amd": "~2.4.1"
+  },
   "devDependencies": {
     "chai": "~1.9.1",
     "http-server": "~0.6.1",
@@ -14,5 +19,9 @@
   },
   "scripts": {
     "test": "./run-tests.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/guardian/scribe-plugin-toolbar.git"
   }
 }
