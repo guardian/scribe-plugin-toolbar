@@ -40,6 +40,9 @@ define(function () {
         scribe.on('content-changed', updateUi);
 
         function updateUi() {
+          // Look for a predefined command.
+          var command = scribe.getCommand(button.dataset.commandName);
+
           var selection = new scribe.api.Selection();
 
           if (selection.range && command.queryEnabled()) {
