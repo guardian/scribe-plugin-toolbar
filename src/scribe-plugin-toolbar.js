@@ -8,7 +8,7 @@ define(function () {
 
       Array.prototype.forEach.call(buttons, function (button) {
         button.addEventListener('click', function () {
-          // Look for a predefined command, otherwise define one now.
+          // Look for a predefined command.
           var command = scribe.getCommand(button.dataset.commandName);
 
           /**
