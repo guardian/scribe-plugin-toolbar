@@ -45,14 +45,15 @@ define(function () {
 
           var selection = new scribe.api.Selection();
 
+          // TODO: Do we need to check for the selection?
+          if (selection.range && command.queryState()) {
+            button.classList.add('active');
+          } else {
+            button.classList.remove('active');
+          }
+
           if (selection.range && command.queryEnabled()) {
             button.removeAttribute('disabled');
-
-            if (command.queryState()) {
-              button.classList.add('active');
-            } else {
-              button.classList.remove('active');
-            }
           } else {
             button.setAttribute('disabled', 'disabled');
           }
