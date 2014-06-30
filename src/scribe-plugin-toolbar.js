@@ -10,6 +10,7 @@ define(function () {
         button.addEventListener('click', function () {
           // Look for a predefined command.
           var command = scribe.getCommand(button.dataset.commandName);
+          var value = button.dataset.commandValue || null;
 
           /**
            * Focus will have been taken away from the Scribe instance when
@@ -19,7 +20,7 @@ define(function () {
            * the command, because it might rely on selection data.
            */
           scribe.el.focus();
-          command.execute();
+          command.execute(value);
           /**
            * Chrome has a bit of magic to re-focus the `contenteditable` when a
            * command is executed.
