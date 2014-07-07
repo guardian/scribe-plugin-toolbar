@@ -10,7 +10,7 @@ define(function () {
         button.addEventListener('click', function () {
           // Look for a predefined command.
           var command = scribe.getCommand(button.dataset.commandName);
-          var value = button.dataset.commandValue || null;
+          var value = button.dataset.commandValue;
 
           /**
            * Focus will have been taken away from the Scribe instance when
