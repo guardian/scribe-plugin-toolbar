@@ -59,6 +59,8 @@ define(function () {
             button.setAttribute('disabled', 'disabled');
           }
         }
+
+        updateUi();
       });
     };
   };
