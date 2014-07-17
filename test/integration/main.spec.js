@@ -1,4 +1,6 @@
 var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
 var expect = chai.expect;
 
 var helpers = require('scribe-test-harness/helpers');
@@ -16,6 +18,7 @@ var scribeNode;
 beforeEach(function () {
   scribeNode = helpers.scribeNode;
 });
+
 
 describe('toolbar plugin', function () {
   beforeEach(function () {
@@ -51,24 +54,19 @@ describe('toolbar plugin', function () {
   });
 
   when('updating the toolbar ui', function () {
-    beforeEach(function () {
-      // Click in the contenteditable to enable/disable relevant buttons
-      return scribeNode.click();
+    it('should disable toolbar buttons', function (done) {
+      driver.executeScript(function () {
+        return window.document.querySelector('.scribe-toolbarDiv button[data-command-name]');
+      }).then(function (button) {
+        expect(button.getAttribute('disabled')).to.be.eventually.ok.notify(done);
+      });
     });
 
-    it('should not disable vendor buttons', function () {
-      return driver.executeScript(function () {
-        var vendorButtons = window.document.querySelectorAll('.scribe-toolbar button');
-        Array.prototype.forEach.call(vendorButtons, function(button) {
-          if (button.hasAttribute('data-command-name')) {
-            // We have a default button, which is disabled when no text is
-            // inserted
-            expect(button.disabled).to.be.ok;
-          } else {
-            // We have a vendor button, it shouldn't be disabled
-            expect(button.disabled).to.not.be.ok;
-          }
-        });
+    it('should not disable vendor buttons', function (done) {
+      driver.executeScript(function () {
+        return window.document.querySelector('.scribe-toolbarDiv button:not([data-command-name])');
+      }).then(function (button) {
+        expect(button.getAttribute('disabled')).not.to.be.eventually.ok.notify(done);
       });
     });
   });
