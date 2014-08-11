@@ -37,12 +37,19 @@ describe('toolbar plugin', function () {
       defaultButton.setAttribute('data-command-name', 'removeFormat');
       defaultButton.innerText = 'Remove Format';
 
+      // Create a button with command parameter
+      var parameterButton = window.document.createElement('button');
+      parameterButton.setAttribute('data-command-name', 'foreColor');
+      parameterButton.setAttribute('data-command-value', 'red');
+      parameterButton.innerText = 'Paint it red';
+
       // Create a vendor button
       var vendorButton = window.document.createElement('button');
       vendorButton.innerText = 'Leave vendor alone!';
 
       // Add them to the DOM
       toolbarDiv.appendChild(defaultButton);
+      toolbarDiv.appendChild(parameterButton);
       toolbarDiv.appendChild(vendorButton);
       body.appendChild(toolbarDiv);
 
@@ -50,6 +57,18 @@ describe('toolbar plugin', function () {
         window.scribe.use(toolbarPlugin(toolbarDiv));
         done();
       });
+    });
+  });
+
+  beforeEach(function () {
+    return driver.executeScript(function () {
+      window.sinonSandbox = sinon.sandbox.create();
+    });
+  });
+
+  afterEach(function () {
+    return driver.executeScript(function () {
+      window.sinonSandbox.restore();
     });
   });
 
@@ -68,6 +87,29 @@ describe('toolbar plugin', function () {
       }).then(function (button) {
         expect(button.getAttribute('disabled')).not.to.be.eventually.ok.notify(done);
       });
+    });
+  });
+
+  when('clicking on a button', function () {
+    beforeEach(function () {
+      return driver.executeScript(function () {
+        window.scribe.commands.foreColor = new window.scribe.api.Command('foreColor');
+        window.scribe.commands.foreColor.execute = sinon.spy();
+      });
+    });
+
+    afterEach(function () {
+      return driver.executeScript(function() {
+        delete window.scribe.commands.foreColor;
+      });
+    });
+
+    it('should pass the parameter to command', function (done) {
+      scribeNode.click();
+      expect(driver.executeScript(function () {
+        window.document.querySelector('.scribe-toolbarDiv button[data-command-name=foreColor]').click();
+        return window.scribe.commands.foreColor.execute.calledWith('red');
+      })).to.be.eventually.ok.notify(done);
     });
   });
 });
