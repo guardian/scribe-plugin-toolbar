@@ -41,22 +41,28 @@ define(function () {
         scribe.on('content-changed', updateUi);
 
         function updateUi() {
-          // Look for a predefined command.
-          var command = scribe.getCommand(button.dataset.commandName);
+          try {
+            // Look for a predefined command.
+            var command = scribe.getCommand(button.dataset.commandName);
 
-          var selection = new scribe.api.Selection();
+            var selection = new scribe.api.Selection();
 
-          // TODO: Do we need to check for the selection?
-          if (selection.range && command.queryState()) {
+            // TODO: Do we need to check for the selection?
+            if (selection.range && command.queryState()) {
             button.classList.add('active');
-          } else {
-            button.classList.remove('active');
-          }
+            } else {
+                button.classList.remove('active');
+            }
 
-          if (selection.range && command.queryEnabled()) {
-            button.removeAttribute('disabled');
-          } else {
-            button.setAttribute('disabled', 'disabled');
+            if (selection.range && command.queryEnabled()) {
+                button.removeAttribute('disabled');
+            } else {
+                button.setAttribute('disabled', 'disabled');
+            }
+          } catch(e) {
+            if (scribe.isDebugModeEnabled()) {
+              console.error(e.name, e.message);
+            }
           }
         }
 
