@@ -1,5 +1,7 @@
 # scribe-plugin-toolbar [![Build Status](https://travis-ci.org/guardian/scribe-plugin-toolbar.svg?branch=master)](https://travis-ci.org/guardian/scribe-plugin-toolbar)
 
+A toolbar of buttons and shortcuts for Scribe
+
 ## Installation
 ```
 bower install scribe-plugin-toolbar
