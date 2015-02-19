@@ -1,4 +1,6 @@
 var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
 var expect = chai.expect;
 
 var helpers = require('scribe-test-harness/helpers');
@@ -17,6 +19,7 @@ beforeEach(function () {
   scribeNode = helpers.scribeNode;
 });
 
+
 describe('toolbar plugin', function () {
   beforeEach(function () {
     return initializeScribe();
@@ -34,12 +37,19 @@ describe('toolbar plugin', function () {
       defaultButton.setAttribute('data-command-name', 'removeFormat');
       defaultButton.innerText = 'Remove Format';
 
+      // Create a button with command parameter
+      var parameterButton = window.document.createElement('button');
+      parameterButton.setAttribute('data-command-name', 'foreColor');
+      parameterButton.setAttribute('data-command-value', 'red');
+      parameterButton.innerText = 'Paint it red';
+
       // Create a vendor button
       var vendorButton = window.document.createElement('button');
       vendorButton.innerText = 'Leave vendor alone!';
 
       // Add them to the DOM
       toolbarDiv.appendChild(defaultButton);
+      toolbarDiv.appendChild(parameterButton);
       toolbarDiv.appendChild(vendorButton);
       body.appendChild(toolbarDiv);
 
@@ -50,26 +60,56 @@ describe('toolbar plugin', function () {
     });
   });
 
+  beforeEach(function () {
+    return driver.executeScript(function () {
+      window.sinonSandbox = sinon.sandbox.create();
+    });
+  });
+
+  afterEach(function () {
+    return driver.executeScript(function () {
+      window.sinonSandbox.restore();
+    });
+  });
+
   when('updating the toolbar ui', function () {
-    beforeEach(function () {
-      // Click in the contenteditable to enable/disable relevant buttons
-      return scribeNode.click();
+    it('should disable toolbar buttons', function (done) {
+      driver.executeScript(function () {
+        return window.document.querySelector('.scribe-toolbarDiv button[data-command-name]');
+      }).then(function (button) {
+        expect(button.getAttribute('disabled')).to.be.eventually.ok.notify(done);
+      });
     });
 
-    it('should not disable vendor buttons', function () {
-      return driver.executeScript(function () {
-        var vendorButtons = window.document.querySelectorAll('.scribe-toolbar button');
-        Array.prototype.forEach.call(vendorButtons, function(button) {
-          if (button.hasAttribute('data-command-name')) {
-            // We have a default button, which is disabled when no text is
-            // inserted
-            expect(button.disabled).to.be.ok;
-          } else {
-            // We have a vendor button, it shouldn't be disabled
-            expect(button.disabled).to.not.be.ok;
-          }
-        });
+    it('should not disable vendor buttons', function (done) {
+      driver.executeScript(function () {
+        return window.document.querySelector('.scribe-toolbarDiv button:not([data-command-name])');
+      }).then(function (button) {
+        expect(button.getAttribute('disabled')).not.to.be.eventually.ok.notify(done);
       });
+    });
+  });
+
+  when('clicking on a button', function () {
+    beforeEach(function () {
+      return driver.executeScript(function () {
+        window.scribe.commands.foreColor = new window.scribe.api.Command('foreColor');
+        window.scribe.commands.foreColor.execute = sinon.spy();
+      });
+    });
+
+    afterEach(function () {
+      return driver.executeScript(function() {
+        delete window.scribe.commands.foreColor;
+      });
+    });
+
+    it('should pass the parameter to command', function (done) {
+      scribeNode.click();
+      expect(driver.executeScript(function () {
+        window.document.querySelector('.scribe-toolbarDiv button[data-command-name=foreColor]').click();
+        return window.scribe.commands.foreColor.execute.calledWith('red');
+      })).to.be.eventually.ok.notify(done);
     });
   });
 });

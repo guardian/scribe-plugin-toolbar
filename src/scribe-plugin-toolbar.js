@@ -10,6 +10,7 @@ define(function () {
         button.addEventListener('click', function () {
           // Look for a predefined command.
           var command = scribe.getCommand(button.dataset.commandName);
+          var value = button.dataset.commandValue;
 
           /**
            * Focus will have been taken away from the Scribe instance when
@@ -19,7 +20,7 @@ define(function () {
            * the command, because it might rely on selection data.
            */
           scribe.el.focus();
-          command.execute();
+          command.execute(value);
           /**
            * Chrome has a bit of magic to re-focus the `contenteditable` when a
            * command is executed.
@@ -40,24 +41,32 @@ define(function () {
         scribe.on('content-changed', updateUi);
 
         function updateUi() {
-          // Look for a predefined command.
-          var command = scribe.getCommand(button.dataset.commandName);
+          try {
+            // Look for a predefined command.
+            var command = scribe.getCommand(button.dataset.commandName);
 
-          var selection = new scribe.api.Selection();
+            var selection = new scribe.api.Selection();
 
-          // TODO: Do we need to check for the selection?
-          if (selection.range && command.queryState()) {
+            // TODO: Do we need to check for the selection?
+            if (selection.range && command.queryState()) {
             button.classList.add('active');
-          } else {
-            button.classList.remove('active');
-          }
+            } else {
+                button.classList.remove('active');
+            }
 
-          if (selection.range && command.queryEnabled()) {
-            button.removeAttribute('disabled');
-          } else {
-            button.setAttribute('disabled', 'disabled');
+            if (selection.range && command.queryEnabled()) {
+                button.removeAttribute('disabled');
+            } else {
+                button.setAttribute('disabled', 'disabled');
+            }
+          } catch(e) {
+            if (scribe.isDebugModeEnabled()) {
+              console.error(e.name, e.message);
+            }
           }
         }
+
+        updateUi();
       });
     };
   };

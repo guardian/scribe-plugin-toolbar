@@ -2,6 +2,7 @@
   "name": "scribe-plugin-toolbar",
   "devDependencies": {
     "requirejs": "~2.1.9",
-    "scribe": "~0.1.10"
+    "scribe": "~0.1.10",
+    "sinonjs": "~1.10.2"
   }
 }
