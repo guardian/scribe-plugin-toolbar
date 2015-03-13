@@ -23,3 +23,5 @@ require(['scribe', 'scribe-plugin-toolbar'], function (Scribe, scribePluginToolb
   scribe.use(scribePluginToolbar(toolbarElement));
 });
 ```
+
+For more documentation see the [project wiki](https://github.com/guardian/scribe-plugin-toolbar/wiki)
