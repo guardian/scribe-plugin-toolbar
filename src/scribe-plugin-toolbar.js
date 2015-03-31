@@ -52,11 +52,8 @@ define(function () {
             return (disabledTags.indexOf(nodeName) !== -1);
           });
 
-          // see https://github.com/guardian/scribe/issues/208
-          var isListCommand = ['insertUnorderedList', 'insertOrderedList'].indexOf(command) !== -1;
-
           // TODO: Do we need to check for the selection?
-          if (selection.range && !isListCommand && command.queryState(button.dataset.commandValue)) {
+          if (selection.range && command.queryState(button.dataset.commandValue)) {
             button.classList.add('active');
           } else {
             button.classList.remove('active');
