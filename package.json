@@ -3,7 +3,6 @@
   "version": "0.2.0",
   "main": "src/scribe-plugin-toolbar.js",
   "dependencies": {
-    "lodash-amd": "~2.4.1"
   },
   "devDependencies": {
     "chai": "~1.9.1",
@@ -18,7 +17,8 @@
     "scribe-test-harness": "~0.0.17"
   },
   "scripts": {
-    "test": "./run-tests.sh"
+    "test": "./run-tests.sh",
+    "postinstall": "bower install"
   },
   "repository": {
     "type": "git",
