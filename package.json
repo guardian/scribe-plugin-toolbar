@@ -14,11 +14,12 @@
     "plumber-requirejs": "~0.4.0",
     "plumber-uglifyjs": "~0.4.0",
     "plumber-write": "~0.4.0",
-    "scribe-test-harness": "~0.0.17"
+    "scribe-test-harness": "~0.0.17",
+    "bower": "~1"
   },
   "scripts": {
     "test": "./run-tests.sh",
-    "postinstall": "bower install"
+    "postinstall": "node_modules/bower/bin/bower install"
   },
   "repository": {
     "type": "git",
