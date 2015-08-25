@@ -7,7 +7,7 @@ define(function () {
       var buttons = toolbarNode.querySelectorAll('[data-command-name]');
 
       Array.prototype.forEach.call(buttons, function (button) {
-        button.addEventListener('click', function () {
+        button.addEventListener('mousedown', function () {
           // Look for a predefined command.
           var command = scribe.getCommand(button.dataset.commandName);
 
