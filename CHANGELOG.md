@@ -1,3 +1,7 @@
+# 0.2.2
+
+Removes the post-install hook as it was causing issues to be reported in other build systems.
+
 # 0.2.1
 
 Button clicks have been changed to 'mousedown' events to try and avoid focus issues. Thank you (madjor5)[https://github.com/madjor5]
