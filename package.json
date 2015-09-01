@@ -18,8 +18,7 @@
     "bower": "~1"
   },
   "scripts": {
-    "test": "./run-tests.sh",
-    "postinstall": "node_modules/bower/bin/bower install"
+    "test": "./run-tests.sh"
   },
   "repository": {
     "type": "git",

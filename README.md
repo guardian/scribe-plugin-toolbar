@@ -25,3 +25,13 @@ require(['scribe', 'scribe-plugin-toolbar'], function (Scribe, scribePluginToolb
 ```
 
 For more documentation see the [project wiki](https://github.com/guardian/scribe-plugin-toolbar/wiki)
+
+## Development
+
+After cloning the repo:
+
+* `npm install`
+* `bower install`
+* `npm run test`
+
+If the tests run green then you are good to start developing
