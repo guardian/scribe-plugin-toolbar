@@ -4,19 +4,21 @@ define(function () {
 
   var focusedElement = null;
 
-  return function (toolbarNode) {
+  return function (toolbarNode, options) {
 
     return function (scribe) {
 
-      scribe.el.addEventListener('focus', function() {
-        focusedElement = scribe.el;
-      });
+      if(options.shared) {
+        scribe.el.addEventListener('focus', function() {
+          focusedElement = scribe.el;
+        });
+      }
 
       var buttons = toolbarNode.querySelectorAll('[data-command-name]');
 
       Array.prototype.forEach.call(buttons, function (button) {
         button.addEventListener('mousedown', function () {
-          if (scribe.el !== focusedElement) {
+          if (options.shared && (scribe.el !== focusedElement)) {
             return;
           }
 
