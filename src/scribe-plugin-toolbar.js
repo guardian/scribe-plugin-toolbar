@@ -10,7 +10,9 @@ define(function () {
       shared: false
     };
 
-    options = (typeof options == 'undefined') ? defaultOptions: options;
+    if(!options) {
+      options = defaultOptions;
+    }
 
     options = Object.freeze(options);
 
