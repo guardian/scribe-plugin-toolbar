@@ -6,6 +6,14 @@ define(function () {
 
   return function (toolbarNode, options) {
 
+    var defaultOptions = {
+      shared: false
+    };
+
+    options = (typeof options == 'undefined') ? defaultOptions: options;
+
+    options = Object.freeze(options);
+
     return function (scribe) {
 
       if(options.shared) {

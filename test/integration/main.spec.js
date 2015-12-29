@@ -58,7 +58,7 @@ describe('toolbar plugin', function () {
       body.appendChild(toolbarDiv);
 
       require(['../../src/scribe-plugin-toolbar'], function (toolbarPlugin) {
-        window.scribe.use(toolbarPlugin(toolbarDiv, {}));
+        window.scribe.use(toolbarPlugin(toolbarDiv));
         done();
       });
     });
