@@ -1,3 +1,9 @@
+# 1.0.0
+
+Allows a single toolbar to be shared amongst multiple scribes. This behaviour is controlled through the new options paramter that changes the signature of the module (hence the major version bump).
+
+While I've put together the final package this contribution came primarily from [Shihab Uddin](https://github.com/shihabuddin), thanks for contributing the code and also sticking through the slightly prolonged release process.
+
 # 0.2.2
 
 Removes the post-install hook as it was causing issues to be reported in other build systems.
