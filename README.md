@@ -26,6 +26,10 @@ require(['scribe', 'scribe-plugin-toolbar'], function (Scribe, scribePluginToolb
 
 For more documentation see the [project wiki](https://github.com/guardian/scribe-plugin-toolbar/wiki)
 
+## Options
+
+Set the `shared` key to true to enable the shared toolbar functionality.
+
 ## Development
 
 After cloning the repo:
