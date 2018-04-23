@@ -42,7 +42,9 @@ define(function () {
            * It is important that we focus the instance again before executing
            * the command, because it might rely on selection data.
            */
-          scribe.el.focus();
+          setTimeout(function() {
+            scribe.el.focus();
+          }, 0);
           command.execute(button.dataset.commandValue);
           /**
            * Chrome has a bit of magic to re-focus the `contenteditable` when a
